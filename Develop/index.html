@@ -19,28 +19,28 @@
         <div class="card-body">
           <textarea
             readonly
-            id="password"
+            id="passwordBox"
             placeholder="Your Secure Password"
             aria-label="Generated Password"
           ></textarea>
         </div>
         <div class="parameters">
           <!-- Lowercase, Uppercase, Length, Numeric, Special Characters -->
-          <form action="/action_page.php" >
+          <form>
             <input type="number" id="length" min="8" max="128">
             <label for="length"> Length</label><br>
-            <input type="checkbox" id="upper" name="upper" value="Uppercase">
-            <label for="upper"> Uppercase Characters</label><br>
-            <input type="checkbox" id="lower" name="lower" value="Lowercase">
-            <label for="lower"> Lowercase Characters</label><br>
-            <input type="checkbox" id="num" name="num" value="Numbers">
-            <label for="num"> Numerical Characters</label><br>
-            <input type="checkbox" id="spec" name="spec" value="Special Characters">
-            <label for="spec"> Special Characters</label><br><br>
+            <input type="checkbox" id="uppercase" name="upper" value="Uppercase">
+            <label for="uppercase"> Uppercase Characters</label><br>
+            <input type="checkbox" id="lowercase" name="lower" value="Lowercase">
+            <label for="lowercase"> Lowercase Characters</label><br>
+            <input type="checkbox" id="numbers" name="numbers" value="Numbers">
+            <label for="numbers"> Numerical Characters</label><br>
+            <input type="checkbox" id="symbols" name="symbols" value="Special Characters">
+            <label for="symbols"> Special Characters</label><br><br>
           </form>  
         </div>
         <div class="card-footer">
-          <input type="submit" value="Generate Password" button id="generate" class="btn"></button>
+          <input type="button" value="Generate Password" button id="generate" class="btn"></button>
         </div>
       </div>
     </div>

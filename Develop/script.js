@@ -1,103 +1,79 @@
-
-//Character Generators
-
-//Grabs random lowercase Letter
-function randomLower() {
-  return String.fromCharCode(Math.floor(Math.random() * 26) + 97);
-}
-//Grabs random Uppercase Letter
-function randomUpper() {
-  return String.fromCharCode(Math.floor(Math.random() * 26) + 65);
-}
-//Grabs random Number
-function randomNumber() {
-  return String.fromCharCode(Math.floor(Math.random() * 10) + 48);
-}
-//Grabs random Symbol
-function randomSymbol() {
-  const symbols= '!@#$%^&*(){}<>,.[]|-=+_'
-  return symbols[(Math.floor(Math.random() * symbols.length))]
-}
-
-
-// Assignment Code
-//var generateBtn = document.querySelector("#generate");
-
-// Add event listener to generate button
-//generateBtn.addEventListener("click", writePassword);
-
-const choiceResult =document.getElementById('password');
-const lengthchoice =document.getElementById('length');
-const upperchoice =document.getElementById('upper');
-const lowerchoice =document.getElementById('lower');
-const numberschoice =document.getElementById('num');
-const symbolschoice =document.getElementById('spec');
-const generateBtn =document.getElementById('generate');
-//Checking to see what is in the boxes
-
-
-//Generate Listen
-generateBtn.addEventListener("click", () => {
-  const lengthValue = lengthchoice.value;
-  const hasLower = lowerchoice.checked;
-  const hasUpper = upperchoice.checked;
-  const hasNumber = numberschoice.checked;
-  const hasSpecial = symbolschoice.checked;
-
- choiceResult.innerText = writePassword(hasLower, hasUpper, hasNumber, hasSpecial, lengthValue);
-})
-
-
-
-// Object containing all generator functions
-const randomFunc = {
-  lower: randomLower,
-  upper: randomUpper,
-  number: randomNumber,
-  special: randomSymbol,
+//Array with characters and their designation
+const keys = {
+  upperCase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+  lowerCase: "abcdefghijklmnopqrstuvwxyz",
+  number: "1234567890",
+  symbol: "!@#$%^&*()_+<>,.?",
 };
 
-//Generate Function
+// Function to pull the actual characters
+const getKey = [
+  function upperCase() {
+    return keys.upperCase[Math.floor(Math.random() * keys.upperCase.length)];
+  },
+  function lowerCase() {
+    return keys.lowerCase[Math.floor(Math.random() * keys.lowerCase.length)];
+  },
+  function number() {
+    return keys.number[Math.floor(Math.random() * keys.number.length)];
+  },
+  function symbol() {
+    return keys.symbol[Math.floor(Math.random() * keys.symbol.length)];
+  },
+];
 
-function writePassword (lower, upper, num, spec, length) {
+//Check to see what is checked
+function createPass() {
+  const upper = document.getElementById("uppercase").checked;
+  const lower = document.getElementById("lowercase").checked;
+  const number = document.getElementById("numbers").checked;
+  const symbol = document.getElementById("symbols").checked;
+  if (upper + lower + number + symbol === 0) {
+    alert("Please check at least one box!");
+    return;
+  }
+  //Attempt to make password
+  const passwordBox = document.getElementById("passwordBox");
+  const length = document.getElementById("length");
+  let password = "";
+  // Checks to see what is checked and runs through the loop as many times as it needs to. Small error causes the length of the
+  // password to be multiplied by how many boxes are checked.
+  for (i = 0; i < length.value; i++) {
+    if (upper) {
+      var upperChecked = getKey[0];
+      password = password + upperChecked();
+    }
+    if (lower) {
+      var lowerChecked = getKey[1];
+      password = password + lowerChecked();
+    }
+    if (number) {
+      var numChecked = getKey[2];
+      password = password + numChecked();
+    }
+    if (symbol) {
+      var symbolChecked = getKey[3];
+      password = password + symbolChecked();
+    }
+  }
+  // Truncating to make sure password length is correct.
+  function truncateString(str, num) {
+    if (str.length <= num) {
+      return str;
+    }
+    return str.slice(0, num);
+  }
 
-//Make Pass Variable
-//Filter unchecked boxes
-//Loop until length is reached through generator func for each type.
-//Finalize password variable and return result
+  password = truncateString(password, length.value);
 
-let generatedPW = " ";
-
-const typesCount = lower + upper + num + spec ;
-
-console.log('typesCount: ', typesCount);
-
-//Check 
-const checkArr = [{ lower }, { upper }, { num }, { spec }].filter
-(
-  item => Object.values(item)[0]
-);
-
-if (typesCount === 0) {
-  return '';
+  // let keytoAdd = getKey[Math.floor(Math.random() * getKey.Length)];
+  // let isChecked = document.getElementById("keytoAdd").checked;
+  // if (isChecked) {
+  // password += keytoAdd();
+  // }
+  passwordBox.innerHTML = password;
 }
 
-for (let i = 0; i < length; i += typesCount) {
-  checkArr.forEach(type => {
-    const funcName = Object.keys(type)[0];
-    console.log(funcName)
+var gen = document.getElementById("generate");
 
-    generatedPW += randomFunc [funcName]();
-  });
-}
-
-//Running a loop through the checked variables
-
-
-
-console.log (generatedPW);
-
-
-}
-
-
+gen.addEventListener("click", createPass);

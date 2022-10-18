@@ -106,8 +106,7 @@ button[disabled] {
   margin-left: 5%;
 }
 
-
-#password {
+#passwordBox {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -145,4 +144,3 @@ button[disabled] {
     font-size: 0.8rem;
   }
 }
-
